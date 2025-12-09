@@ -2,32 +2,84 @@
 
 use Illuminate\Support\Facades\Route;
 
+// ========== PUBLIC ROUTES ==========
+
+// Landing/Login Page
 Route::get('/', function () {
-    return view('dashboard');
+    return view('auth.login');
 });
 
-Route::get('/produk', function () {
-    return view('produk');
+// Login Route
+Route::get('/login', function () {
+    return view('auth.login');
 });
 
-Route::get('/transaksi', function () {
-    return view('transaksi');
+// Logout Route (Show confirmation page)
+Route::get('/logout', function () {
+    return view('auth.logout');
 });
 
-Route::get('/riwayat', function () {
-    return view('riwayat');
+// Logout Action (Actually perform logout)
+Route::get('/logout-action', function () {
+    // In a real app, you would:
+    // 1. Clear session
+    // 2. Clear cookies
+    // 3. Log activity
+    // 4. Redirect to login
+    
+    // For demo, just redirect to login
+    return redirect('/login')->with('success', 'Anda telah logout dari sistem.');
 });
 
-// Route::get('/', fn() => redirect()->route('dashboard'));
+// Admin Login
+Route::get('/admin-login', function () {
+    return view('admin.login');
+});
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->name('dashboard');
+// ========== APPLICATION ROUTES ==========
 
-// Route::prefix('product')->name('product.')->group(function () {
-//     Route::get('/', fn() => view('product.index'))->name('index');
-// });
+// POS Routes
+Route::get('/pos', function () {
+    return view('pos.index');
+});
 
-// Route::get('/transaksi-baru', fn() => view('transaksi.baru'))->name('transaksi.baru');
-// Route::get('/riwayat', fn() => view('transaksi.riwayat'))->name('transaksi.riwayat');
+Route::get('/pos/payment', function () {
+    return view('pos.payment');
+});
 
+Route::get('/pos/print', function () {
+    return view('pos.print');
+});
+
+// Products Routes
+Route::get('/products', function () {
+    return view('products.product');
+});
+
+Route::get('/products/edit', function () {
+    return view('products.edit');
+});
+
+Route::get('/products/hapus', function () {
+    return view('products.hapus');
+});
+
+// Transactions Routes
+Route::get('/transactions', function () {
+    return view('transactions.transaksi');
+});
+
+// ========== ADMIN ROUTES ==========
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('admin.dashboard');
+    });
+    
+    Route::get('/products', function () {
+        return view('admin.products');
+    });
+    
+    Route::get('/reports', function () {
+        return view('admin.reports');
+    });
+});
